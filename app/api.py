@@ -3,6 +3,11 @@ from pydantic import BaseModel
 from auth import verify_api_key, verify_jwt, create_jwt
 import os
 from dotenv import load_dotenv
+import sys
+sys.path.append("../scanner")
+
+from scanner_runner import run_security_scan
+
 
 load_dotenv("../.env")
 
@@ -28,14 +33,17 @@ def chat(
     api_key: str = Depends(verify_api_key),
     user: str = Depends(verify_jwt)
 ):
-    # PURE LOCAL BACKEND — NO HF, NO API CALLS
+    # Local LLM backend
     fake_response = f"[LOCAL LLM] Response to: {data.prompt}"
+
+    # Run custom vulnerability scanner
+    scan_result = run_security_scan(data.prompt, fake_response)
 
     return {
         "user": user,
         "prompt": data.prompt,
         "response": fake_response,
-        "backend": "local-fallback",
-        "note": "HF disabled. Real LLM can be plugged later."
+        "security_scan": scan_result,
+        "backend": "local-fallback"
     }
 
