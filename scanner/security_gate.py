@@ -11,6 +11,7 @@ if not REPORT_FILE.exists():
 with open(REPORT_FILE) as f:
     data = json.load(f)
 
+# 🔧 FIX: correct nesting
 prompts = data.get("results", {}).get("prompts", [])
 
 failures = []

@@ -16,8 +16,8 @@ fi
 
 RAW_EVAL_ID=$(cat "$STATE_FILE" | tr -d '\n')
 
-# FIX: Keep only the first timestamp segment
-EVAL_ID=$(echo "$RAW_EVAL_ID" | awk -F':' '{print $1 ":" $2 ":" $3}')
+# 🔧 FIX: keep only first timestamp (your logic already correct)
+EVAL_ID=$(echo "$RAW_EVAL_ID" | awk -F: '{print $1 ":" $2 ":" $3}')
 
 if [ -z "$EVAL_ID" ]; then
   echo "❌ Eval ID is empty"
@@ -25,8 +25,9 @@ if [ -z "$EVAL_ID" ]; then
 fi
 
 echo "📌 Raw eval ID: $RAW_EVAL_ID"
-echo "✅ Clean eval ID: $EVAL_ID"
+echo "🧹 Clean eval ID: $EVAL_ID"
 
+# 🔧 FIXED Promptfoo export command
 npx promptfoo export eval "$EVAL_ID" --output "$REPORT_DIR/promptfoo-results.json"
 
 echo "📦 Exported Promptfoo results to $REPORT_DIR/promptfoo-results.json"
