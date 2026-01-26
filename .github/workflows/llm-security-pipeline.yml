@@ -1,0 +1,86 @@
+name: LLM Security Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  security-pipeline:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      # ------------------------
+      # Install Promptfoo
+      # ------------------------
+      - name: Install Promptfoo
+        run: |
+          npm install -g promptfoo
+
+      # ------------------------
+      # Install Python deps
+      # ------------------------
+      - name: Install Python deps for security gate
+        run: |
+          pip install -r scanner/requirements.txt || true
+
+      # ------------------------
+      # Build Docker image (NEW)
+      # ------------------------
+      - name: Build LLM API image
+        run: |
+          docker build -t llm-api .
+
+      # ------------------------
+      # Trivy Scan (FIXED)
+      # ------------------------
+      - name: Trivy vulnerability scan
+        uses: aquasecurity/trivy-action@0.20.0
+        with:
+          image-ref: llm-api
+          format: table
+          exit-code: "0"               # Do NOT fail pipeline yet
+          vuln-type: "os,library"
+          severity: "UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL"
+
+      # ------------------------
+      # Make scripts executable
+      # ------------------------
+      - name: Make scripts executable
+        run: |
+          chmod +x scanner/run_security_pipeline.sh
+          chmod +x scanner/run_promptfoo.sh
+          chmod +x scanner/export_promptfoo.sh
+
+      # ------------------------
+      # Run full LLM pipeline
+      # ------------------------
+      - name: Run LLM Security Pipeline
+        run: |
+          ./scanner/run_security_pipeline.sh
+
+      # ------------------------
+      # Upload reports ALWAYS
+      # ------------------------
+      - name: Upload security reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: security-reports
+          path: reports/
+
