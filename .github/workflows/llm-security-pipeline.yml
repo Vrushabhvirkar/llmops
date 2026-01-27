@@ -34,9 +34,6 @@ jobs:
       - name: Install Promptfoo
         run: npm install -g promptfoo
 
-      - name: Install Python deps for security gate
-        run: pip install -r scanner/requirements.txt || true
-
       - name: Build LLM API image
         run: |
           docker build -t llm-api -f docker/Dockerfile .
