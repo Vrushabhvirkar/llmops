@@ -9,7 +9,16 @@ sys.path.append("../scanner")
 from scanner_runner import run_security_scan
 
 
-load_dotenv("../.env")
+load_dotenv()  # ✅ allow env vars from Docker / GitHub Actions
+
+APP_API_KEY = os.getenv("APP_API_KEY")
+JWT_SECRET = os.getenv("JWT_SECRET")
+
+if not APP_API_KEY:
+    raise RuntimeError("APP_API_KEY is missing")
+
+if not JWT_SECRET:
+    raise RuntimeError("JWT_SECRET is missing")
 
 app = FastAPI()
 
@@ -37,10 +46,8 @@ def chat(
     api_key: str = Depends(verify_api_key),
     user: str = Depends(verify_jwt)
 ):
-    # Local LLM backend
     fake_response = f"[LOCAL LLM] Response to: {data.prompt}"
 
-    # Run custom vulnerability scanner
     scan_result = run_security_scan(data.prompt, fake_response)
 
     return {

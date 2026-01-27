@@ -1,6 +1,11 @@
 #!/bin/bash
 set -e
 
+# 🔐 Fail fast if secrets are missing (prevents silent CI crash)
+: "${APP_API_KEY:?❌ APP_API_KEY is not set}"
+: "${JWT_SECRET:?❌ JWT_SECRET is not set}"
+: "${HF_TOKEN:?❌ HF_TOKEN is not set}"
+
 echo "🚀 Starting LLM Security Pipeline..."
 
 # 1️⃣ Build image
@@ -13,19 +18,14 @@ docker rm -f llm-api-container >/dev/null 2>&1 || true
 
 API_PORT=8010
 
-# ❌ OLD — no secrets passed into container
-# docker run -d -p $API_PORT:8000 --name llm-api-container llm-api
-
-# ✅ NEW — hard inject secrets so JWT works inside Docker
+# ✅ Inject GitHub secrets into container (CI-safe)
 docker run -d -p $API_PORT:8000 \
-  -e APP_API_KEY="mysecureapikey123" \
-  -e JWT_SECRET="jwt-9aD!xP9Lq#k2304" \
+  -e APP_API_KEY="${APP_API_KEY}" \
+  -e JWT_SECRET="${JWT_SECRET}" \
+  -e HF_TOKEN="${HF_TOKEN}" \
   --name llm-api-container \
   llm-api
 
-# Wait for API
-#echo "⏳ Waiting for API to be ready..."
-#sleep 5
 echo "⏳ Waiting for API to be ready..."
 
 for i in {1..20}; do
@@ -41,15 +41,9 @@ done
 echo "[3] Running Promptfoo LLM scan..."
 unset HTTP_PROXY HTTPS_PROXY http_proxy https_proxy
 
-# ❌ OLD — does not reload runtime JWT
-# npx promptfoo eval -c promptfooconfig.yaml --no-cache
-# npx promptfoo eval -c promptfooconfig.yaml --no-cache || echo "⚠️ Promptfoo reported failures, continuing to export..."
-
-# ✅ NEW — fetch fresh JWT, then load it
 echo "[+] Fetching runtime JWT token..."
 ./scanner/get_jwt_token.sh
 
-# ✅ NEW — reload JWT into env right before Promptfoo
 set -a
 source /tmp/jwt.env
 set +a
