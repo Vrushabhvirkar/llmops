@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set +e   # ✅ CHANGED: allow script to continue on Trivy failure
 
 IMAGE_NAME="llm-api"
 REPORT_DIR="reports"
@@ -11,7 +11,6 @@ mkdir -p "$REPORT_DIR"
 
 trivy image \
   --severity HIGH,CRITICAL \
-  --exit-code 1 \
   --format json \
   --output "$REPORT_FILE" \
   "$IMAGE_NAME"

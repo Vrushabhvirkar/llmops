@@ -1,6 +1,6 @@
 {
   "SchemaVersion": 2,
-  "CreatedAt": "2026-01-25T15:52:48.068900343-05:00",
+  "CreatedAt": "2026-01-27T06:34:21.394228192-05:00",
   "ArtifactName": "llm-api",
   "ArtifactType": "container_image",
   "Metadata": {
@@ -9,7 +9,7 @@
       "Family": "debian",
       "Name": "13.3"
     },
-    "ImageID": "sha256:b75da64498dd842d5c661b595f57dab18b538a051c7023d71b52a396364c9280",
+    "ImageID": "sha256:0b1ecaef996b4905d5136621f061ee0ab6d03b7fd662191ab7454c3964df7983",
     "DiffIDs": [
       "sha256:e50a58335e1366e2581fe61794c1651afe2fe04e881e795aa166f24f4fc78d92",
       "sha256:523062ea36b5189e9ea6d7d86850296d1d7b5b4418109217e7ac12e13273fbba",
@@ -18,14 +18,14 @@
       "sha256:a3b1faeb18c22121a48d8b9726f35b1a81a76792aee2250c6a5f30cc171b8fe5",
       "sha256:3a6dde79819fcee2455e6aef2f4943ed73b4233dbe4596badb66bc4c8528f9ac",
       "sha256:07352e3423cd32b9c1ff30e20a7a63e054e2d3f40307617c68bf7d82efd20787",
-      "sha256:3e633a2218aa5a57d4f65d1fa8f6f151917b6b8ef1db019411d9ea19b7a58757"
+      "sha256:de91c9b67820350b8b8fdcdca9e4447780b4c0515d6498e88014e1308342c5d2"
     ],
     "RepoTags": [
       "llm-api:latest"
     ],
     "ImageConfig": {
       "architecture": "amd64",
-      "created": "2026-01-25T14:22:45.331432223-05:00",
+      "created": "2026-01-27T05:49:18.546679788-05:00",
       "history": [
         {
           "created": "2026-01-12T00:00:00Z",
@@ -99,24 +99,24 @@
           "comment": "buildkit.dockerfile.v0"
         },
         {
-          "created": "2026-01-25T19:22:45Z",
+          "created": "2026-01-27T10:49:18Z",
           "created_by": "COPY app /app # buildkit",
           "comment": "buildkit.dockerfile.v0"
         },
         {
-          "created": "2026-01-25T19:22:45Z",
+          "created": "2026-01-27T10:49:18Z",
           "created_by": "EXPOSE map[8000/tcp:{}]",
           "comment": "buildkit.dockerfile.v0",
           "empty_layer": true
         },
         {
-          "created": "2026-01-25T19:22:45Z",
+          "created": "2026-01-27T10:49:18Z",
           "created_by": "CMD [\"python\" \"-m\" \"uvicorn\" \"api:app\" \"--host\" \"0.0.0.0\" \"--port\" \"8000\"]",
           "comment": "buildkit.dockerfile.v0",
           "empty_layer": true
         },
         {
-          "created": "2026-01-25T19:22:45Z",
+          "created": "2026-01-27T10:49:18Z",
           "created_by": "HEALTHCHECK \u0026{[\"CMD-SHELL\" \"curl -f http://localhost:8000/health || exit 1\"] \"10s\" \"3s\" \"0s\" \"0s\" '\\x05'}",
           "comment": "buildkit.dockerfile.v0",
           "empty_layer": true
@@ -133,7 +133,7 @@
           "sha256:a3b1faeb18c22121a48d8b9726f35b1a81a76792aee2250c6a5f30cc171b8fe5",
           "sha256:3a6dde79819fcee2455e6aef2f4943ed73b4233dbe4596badb66bc4c8528f9ac",
           "sha256:07352e3423cd32b9c1ff30e20a7a63e054e2d3f40307617c68bf7d82efd20787",
-          "sha256:3e633a2218aa5a57d4f65d1fa8f6f151917b6b8ef1db019411d9ea19b7a58757"
+          "sha256:de91c9b67820350b8b8fdcdca9e4447780b4c0515d6498e88014e1308342c5d2"
         ]
       },
       "config": {
@@ -201,7 +201,7 @@
       },
       {
         "Size": 943054848,
-        "DiffID": "sha256:3e633a2218aa5a57d4f65d1fa8f6f151917b6b8ef1db019411d9ea19b7a58757"
+        "DiffID": "sha256:de91c9b67820350b8b8fdcdca9e4447780b4c0515d6498e88014e1308342c5d2"
       }
     ]
   },
@@ -321,7 +321,7 @@
           "InstalledVersion": "0.19.1",
           "Status": "affected",
           "Layer": {
-            "DiffID": "sha256:3e633a2218aa5a57d4f65d1fa8f6f151917b6b8ef1db019411d9ea19b7a58757"
+            "DiffID": "sha256:de91c9b67820350b8b8fdcdca9e4447780b4c0515d6498e88014e1308342c5d2"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2024-23342",
@@ -486,7 +486,7 @@
             "https://www.cve.org/CVERecord?id=CVE-2026-23949"
           ],
           "PublishedDate": "2026-01-20T01:15:57.723Z",
-          "LastModifiedDate": "2026-01-20T01:15:57.723Z"
+          "LastModifiedDate": "2026-01-26T15:05:23.427Z"
         },
         {
           "VulnerabilityID": "CVE-2025-47273",
@@ -500,7 +500,7 @@
           "FixedVersion": "78.1.1",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:3e633a2218aa5a57d4f65d1fa8f6f151917b6b8ef1db019411d9ea19b7a58757"
+            "DiffID": "sha256:de91c9b67820350b8b8fdcdca9e4447780b4c0515d6498e88014e1308342c5d2"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2025-47273",
@@ -615,7 +615,7 @@
             "https://www.cve.org/CVERecord?id=CVE-2026-24049"
           ],
           "PublishedDate": "2026-01-22T05:16:23.157Z",
-          "LastModifiedDate": "2026-01-23T18:16:04.037Z"
+          "LastModifiedDate": "2026-01-26T15:04:59.737Z"
         },
         {
           "VulnerabilityID": "CVE-2026-24049",
@@ -670,7 +670,7 @@
             "https://www.cve.org/CVERecord?id=CVE-2026-24049"
           ],
           "PublishedDate": "2026-01-22T05:16:23.157Z",
-          "LastModifiedDate": "2026-01-23T18:16:04.037Z"
+          "LastModifiedDate": "2026-01-26T15:04:59.737Z"
         }
       ]
     }
