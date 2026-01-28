@@ -32,7 +32,7 @@ docker run -d -p $API_PORT:8000 \
   -e APP_API_KEY="${APP_API_KEY}" \
   -e JWT_SECRET="${JWT_SECRET}" \
   -e HF_TOKEN="${HF_TOKEN}" \
-  -v "$(pwd)/../results:/app/reports"
+  -v "$(pwd)/../results:/app/reports" \
   --name llm-api-container \
   llm-api
 
