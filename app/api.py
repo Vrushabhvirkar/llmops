@@ -1,6 +1,8 @@
 from fastapi import FastAPI, Depends, HTTPException
 from pydantic import BaseModel
 from auth import verify_api_key, verify_jwt, create_jwt
+from prometheus_client import Counter, Gauge, generate_latest, CONTENT_TYPE_LATEST
+from fastapi import Response
 import os
 from dotenv import load_dotenv
 import sys
@@ -21,9 +23,41 @@ if not JWT_SECRET:
 
 app = FastAPI()
 
+# =========================
+# Prometheus Metrics
+# =========================
+
+promptfoo_total_tests = Counter(
+    "promptfoo_tests_total",
+    "Total Promptfoo tests executed"
+)
+
+promptfoo_failed_tests = Counter(
+    "promptfoo_tests_failed",
+    "Total Promptfoo failed tests"
+)
+
+security_gate_status = Gauge(
+    "security_gate_status",
+    "Security gate result (1=pass, 0=fail)"
+)
+
+trivy_high_critical = Gauge(
+    "trivy_high_critical_vulns",
+    "Number of HIGH/CRITICAL Trivy vulnerabilities"
+)
+
+
 @app.get("/health")
 def health():
     return {"status": "ok"}
+
+@app.get("/metrics")
+def metrics():
+    return Response(
+        generate_latest(),
+        media_type=CONTENT_TYPE_LATEST
+    )
 
 class LoginRequest(BaseModel):
     username: str
