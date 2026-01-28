@@ -9,6 +9,7 @@ COPY app/requirements.txt /app/requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY app /app
+COPY scanner /app/scanner
 
 EXPOSE 8000
 
