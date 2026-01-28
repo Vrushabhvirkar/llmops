@@ -6,8 +6,7 @@ from dotenv import load_dotenv
 import sys
 sys.path.append("/app/scanner")  # ✅ FIX: correct path inside Docker
 
-from scanner_runner import run_security_scan
-
+from scanner.scanner_runner import run_security_scan
 
 load_dotenv()  # allow env vars from Docker / GitHub Actions
 
