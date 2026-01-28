@@ -89,10 +89,18 @@ if ! ./scanner/run_trivy_scan.sh; then
   PIPELINE_FAILED=1
 fi
 
+#if [ "$PIPELINE_FAILED" -ne 0 ]; then
+#  echo "❌ Pipeline failed due to security issues"
+#  exit 1
+#fi
+
+#echo "✅ Pipeline complete."
 if [ "$PIPELINE_FAILED" -ne 0 ]; then
   echo "❌ Pipeline failed due to security issues"
+  ./scanner/notify_slack.sh failure "Security gate or Trivy scan failed"
   exit 1
 fi
 
+./scanner/notify_slack.sh success "All security checks passed"
 echo "✅ Pipeline complete."
 
