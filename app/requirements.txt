@@ -5,4 +5,5 @@ passlib[bcrypt]
 huggingface_hub
 python-dotenv
 requests
+prometheus-client
 
