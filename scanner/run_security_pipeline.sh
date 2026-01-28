@@ -28,14 +28,32 @@ docker run -d -p $API_PORT:8000 \
 
 echo "⏳ Waiting for API to be ready..."
 
+#for i in {1..20}; do
+#  if curl -s http://127.0.0.1:$API_PORT/health >/dev/null; then
+#    echo "✅ API is ready"
+#    break
+#  fi
+#  echo "⏳ API not ready yet... ($i)"
+#  sleep 2
+#done
+#API_READY=0
+
 for i in {1..20}; do
-  if curl -s http://127.0.0.1:$API_PORT/health >/dev/null; then
+  if curl -sf http://127.0.0.1:$API_PORT/health >/dev/null; then
     echo "✅ API is ready"
+    API_READY=1
     break
   fi
   echo "⏳ API not ready yet... ($i)"
   sleep 2
 done
+
+if [ "$API_READY" -ne 1 ]; then
+  echo "❌ API never became ready"
+  docker logs llm-api-container
+  exit 1
+fi
+
 
 # 3️⃣ Run Promptfoo scan
 echo "[3] Running Promptfoo LLM scan..."
