@@ -2,7 +2,7 @@
 ---
 Repository: llmops-security-pipeline
 Course: Information Security / DevSecOps
-Team Size: 1 (Individual Project)
+Team Size: 4 (Group Project)
 Duration: Jan 2026 – Feb 2026
 ---
 
