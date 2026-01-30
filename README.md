@@ -5,13 +5,14 @@ Course: Information Security / DevSecOps
 Team Size: 1 (Individual Project)
 Duration: Jan 2026 – Feb 2026
 ---
+
 🔰 Project Overview
 ---
 This project focuses on building a secure and automated DevSecOps pipeline for Large Language Model (LLM) applications.
 It integrates Prompt Injection Testing, Container Vulnerability Scanning, Security Gates, and Real-Time Monitoring into one workflow.
 
 The system ensures:
-
+---
 Early detection of LLM prompt attacks
 
 Automated CI/CD security validation
@@ -53,19 +54,23 @@ Expose Security Metrics using Prometheus
 Visualize dashboards in Grafana
 
 Deploy pipeline on AWS EC2 using Docker
----
+
 ⚙️ Technologies & Tools Used
-Category	Tools / Frameworks	Purpose
-Programming	Python, Bash	API & automation scripts
-Backend API	FastAPI	LLM API service
-CI/CD	GitHub Actions	Automated pipeline execution
-LLM Security	Promptfoo	Prompt injection testing
-Containerization	Docker	Isolated environment
-Vulnerability Scan	Trivy	CVE detection
-Monitoring	Prometheus	Metrics collection
-Visualization	Grafana	Dashboards
-Authentication	JWT, API Keys	Secure API access
-Cloud	AWS EC2 Ubuntu	Deployment server
+---
+
+| Category            | Tools / Frameworks | Purpose                     |
+|---------------------|--------------------|-----------------------------|
+| Programming         | Python, Bash       | API & automation scripts    |
+| Backend API         | FastAPI            | LLM API service             |
+| CI/CD               | GitHub Actions     | Automated pipeline execution|
+| LLM Security        | Promptfoo          | Prompt injection testing    |
+| Containerization    | Docker             | Isolated environment        |
+| Vulnerability Scan  | Trivy              | CVE detection               |
+| Monitoring          | Prometheus         | Metrics collection          |
+| Visualization       | Grafana            | Dashboards                  |
+| Authentication      | JWT, API Keys      | Secure API access           |
+| Cloud               | AWS EC2 Ubuntu     | Deployment server           |
+
 
 🔐 Key Features
 ---
@@ -103,30 +108,72 @@ Grafana Dashboard Visualization
 🗂️ Project Structure
 ---
 ```
-llmops/
+llmops-security-pipeline/
 │
-├── app/                 # FastAPI LLM API
-├── scanner/             # Security scripts
-├── docker/              # Dockerfile
-├── monitoring/          # Prometheus config
-├── reports/             # JSON reports
+├── README.md
+├── .gitignore
+├── package.json
+├── package-lock.json
 │
-├── docker-compose.monitoring.yml
-├── promptfooconfig.yaml
-├── run_security_pipeline.sh
-└── README.md
+├── docker/
+│   └── Dockerfile
+│
+├── app/                         # Core FastAPI LLM API
+│   ├── api.py                   # Main FastAPI application
+│   ├── auth.py                  # API Key & JWT authentication
+│   ├── requirements.txt         # Python dependencies
+│   └── __init__.py
+│
+├── scanner/                     # Security & pipeline logic
+│   ├── run_security_pipeline.sh # Master pipeline script
+│   ├── get_jwt_token.sh         # Fetch runtime JWT token
+│   ├── export_promptfoo.sh      # Export Promptfoo results
+│   ├── run_trivy_scan.sh        # Trivy container scan
+│   ├── security_gate.py         # Security gate logic
+│   ├── notify_slack.sh          # Notification script
+│   ├── scanner_runner.py        # Runtime LLM security scan
+│   └── __init__.py
+│
+├── monitoring/                  # Observability configs
+│   ├── prometheus.yml           # Prometheus scrape config
+│   └── grafana/
+│       └── dashboards/
+│           └── llm-security.json
+│
+├── docker-compose.monitoring.yml # Prometheus + Grafana stack
+│
+├── reports/                     # Generated security reports
+│   ├── promptfoo-results.json   # Prompt injection results
+│   ├── trivy-report.json        # Container vulnerability report
+│   └── gate-status.json         # Security gate outcome
+│
+├── promptfooconfig.yaml         # Promptfoo test configuration
+├── rest_target.yaml             # Promptfoo API target config
+│
+├── .github/                     # GitHub Actions CI/CD
+│   └── workflows/
+│       └── ci-cd.yml
+│
+└── docs/                        # Documentation & diagrams
+    ├── architecture.png
+    ├── workflow.png
+    └── project-report.md
+
 ```
-🧠 Step-by-Step Workflow
+🧠 Step-by-Step Project Workflow
 ---
-Step	Description	Tools
-1	Build Docker Image	Docker
-2	Start API Container	FastAPI
-3	Prompt Injection Testing	Promptfoo
-4	Export JSON Reports	Bash
-5	Security Gate Validation	Python
-6	Container Vulnerability Scan	Trivy
-7	Metrics Exposure	Prometheus Client
-8	Dashboard Visualization	Grafana
+
+| Step | Description                    | Tools              |
+|------|-------------------------------|--------------------|
+| 1    | Build Docker Image            | Docker             |
+| 2    | Start API Container           | FastAPI            |
+| 3    | Prompt Injection Testing      | Promptfoo          |
+| 4    | Export JSON Reports           | Bash               |
+| 5    | Security Gate Validation      | Python             |
+| 6    | Container Vulnerability Scan  | Trivy              |
+| 7    | Metrics Exposure              | Prometheus Client  |
+| 8    | Dashboard Visualization       | Grafana            |
+
 
 🚀 Getting Started
 ---
@@ -172,10 +219,13 @@ Password: admin
 
 📁 Generated Reports
 ---
-        File	            Description
-promptfoo-results.json	Prompt attack results
-trivy-report.json	Container vulnerabilities
-gate-status.json	Pass/Fail status
+
+| File                     | Description                  |
+|--------------------------|------------------------------|
+| promptfoo-results.json   | Prompt attack results        |
+| trivy-report.json        | Container vulnerabilities    |
+| gate-status.json         | Security gate pass/fail status |
+
 
 📡 Metrics Endpoint
 ---
