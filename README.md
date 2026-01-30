@@ -130,39 +130,58 @@ Step	Description	Tools
 
 🚀 Getting Started
 ---
-```bash
 1️⃣ Clone Repository
+---
+```bash
 git clone https://github.com/<your-username>/llmops-security-pipeline.git
 cd llmops
+```
 
 2️⃣ Set Environment Variables
+---
+```bash
 export APP_API_KEY="your_key"
 export JWT_SECRET="your_secret"
 export HF_TOKEN="your_token"
+```
 
 3️⃣ Run Pipeline
+---
+```bash
 ./scanner/run_security_pipeline.sh
+```
 
 📊 Monitoring Setup
-
-Run Prometheus
+---
+1️⃣ Run Prometheus
+---
+```bash
 docker run -d -p 9090:9090 prom/prometheus
+```
 
-Run Grafana
+2️⃣ Run Grafana
+---
+```bash
 docker run -d -p 3000:3000 grafana/grafana
 
-
 Default Login:
+---
 Username: admin
 Password: admin
+```
 
 📁 Generated Reports
-File	Description
+---
+        File	            Description
 promptfoo-results.json	Prompt attack results
 trivy-report.json	Container vulnerabilities
 gate-status.json	Pass/Fail status
+
 📡 Metrics Endpoint
+---
+```bash
 http://localhost:8000/metrics
+```
 
 Key Metrics
 ---
@@ -175,7 +194,7 @@ security_gate_status
 trivy_high_critical_vulns
 
 📈 Expected Outcomes
-
+---
 Automated secure CI/CD pipeline
 
 Early detection of prompt injection
@@ -187,9 +206,7 @@ Real-time security visibility dashboards
 Reduced manual effort & faster deployments
 
 🧩 Future Enhancements
-
-Slack / Email Alerts
-
+---
 Kubernetes Deployment
 
 ELK Logging Stack
@@ -201,7 +218,7 @@ Drift Detection Automation
 Multi-Model Security Testing
 
 🏁 Conclusion
-
+---
 This project delivers a complete DevSecOps security ecosystem for LLM applications by combining:
 
 Prompt Security Testing
@@ -215,14 +232,15 @@ Real-Time Monitoring & Dashboards
 It is scalable, secure, and aligned with modern AI security and DevSecOps best practices, making it suitable for both academic research and industry adoption.
 
 📜 License
-
+---
 Developed for academic and research purposes.
 All rights reserved © Vrushabh Virkar
 
 💡 Next Step
-
+---
 After adding this file:
-
+```bash
 git add README.md
 git commit -m "Add professional README"
 git push origin main
+```
