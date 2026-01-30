@@ -1,5 +1,5 @@
 🔐 LLM Security & Monitoring Pipeline using DevSecOps
-
+---
 Repository: llmops-security-pipeline
 Course: Information Security / DevSecOps
 Team Size: 1 (Individual Project)
